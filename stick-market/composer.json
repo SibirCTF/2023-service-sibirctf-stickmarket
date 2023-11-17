@@ -1,0 +1,6 @@
+{
+    "require": {
+        "symfony/yaml": "^6.3",
+        "ramsey/uuid": "^4.7"
+    }
+}
