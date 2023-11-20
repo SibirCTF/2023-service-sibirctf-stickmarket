@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  stickmarket:
+    image: stick-market
+    restart: unless-stopped
+    command: supervisord -c /etc/supervisor.conf
+    ports:
+      - "80:80"
+      - "443:443"
+ 
+

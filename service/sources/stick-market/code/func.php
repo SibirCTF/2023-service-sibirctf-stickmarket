@@ -112,7 +112,7 @@ function UpdateBonus($username) {
     try {
         $db = ConnectDatabase();
         $stmt = $db->prepare("UPDATE users SET bonus=0 WHERE username=:username");
-        $stmt->bindValue(':uuid', $username);
+        $stmt->bindValue(':username', $username);
         $stmt->execute();
         return true; 
     } catch (Exception) {
@@ -121,42 +121,49 @@ function UpdateBonus($username) {
 }
 
 function yamlValidate($yamlFilePath, $imagePath) {
-    if (file_exists($yamlFilePath)) {
-        $data = Yaml::parseFile($yamlFilePath);
+    try {
+	    if (file_exists($yamlFilePath)) {
+        	$data = Yaml::parseFile($yamlFilePath);
 
-        $name = $data['stick']['nameOfStick'] ?? "Typical stick";
-        $price = $data['stick']['price'] ?? 1000;
+	        $name = $data['stick']['nameOfStick'] ?? "Typical stick";
+        	$price = $data['stick']['price'] ?? 1000;
 
-        if ($price <= 0 | $price > 1000 ) {
-            return [false, "Price must be greater than 0 and less than or equal to 1000"];
-        }
+	        if ($price <= 0 | $price > 1000 ) {
+        	    return [false, "Price must be greater than 0 and less than or equal to 1000"];
+	        }
 
-        $description = $data['stick']['description'] ?? "Best. Of. The. Best. Stick. Of. Truth.";
+	        $description = $data['stick']['description'] ?? "Best. Of. The. Best. Stick. Of. Truth.";
 
-        $phraseOfTruth = $data['stick']['phraseOfTruth'] ?? "Truth is lie.";
-        $author = $data['stick']['author'] ?? "Kartman";
-        $image = $data['stick']['image'] ?? null;
+        	$phraseOfTruth = $data['stick']['phraseOfTruth'] ?? "Truth is lie.";
+       	 	$author = $data['stick']['author'] ?? "Kartman";
+        	$image = $data['stick']['image'] ?? null;
 
-        if (!empty($image) && !empty($imagePath)) {
+	        if (!empty($image) && !empty($imagePath)) {
 
-            $imageInfo = @pathinfo($imagePath);
+        	    $imageInfo = @pathinfo($imagePath);
 
-            if ($imageInfo['extension'] != "jpg") {
-                return [false, "Error load image file: " . $imagePath];
-            }
-        }
+	            if ($imageInfo['extension'] != "jpg") {
+        	        return [false, "Error load image file: " . $imagePath];
+	            }
+        	}
 
-        $result = ['name'              => $name, 
-                   'price'             => $price,
-                   'description'       => $description, 
-                   'phraseOfTruth'     => $phraseOfTruth,
-                   'author'            => $author, 
-                   'image'             => $imagePath
-                ];
+	        $result = ['name'              => $name, 
+        	           'price'             => $price,
+                	   'description'       => $description, 
+                	   'phraseOfTruth'     => $phraseOfTruth,
+                	   'author'            => $author, 
+               		   'image'             => $imagePath
+	                ];
 
-        return [true, $result];
-    } else {
-        return [false, "Error reading yaml file!"];
+        	return [true, $result];
+
+	    } else {
+
+        	return [false, "Error reading yaml file!"];
+	    }
+
+    } catch (Exception) {
+	    return [false, "Error reading yaml file!"];
     }
 }
 
