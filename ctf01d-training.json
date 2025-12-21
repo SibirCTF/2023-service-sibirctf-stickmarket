@@ -3,23 +3,40 @@
   "display_name": "Sibirctf Stickmarket",
   "ctf_event": "SibirCTF 2023",
   "year": 2023,
-  "description": null,
+  "description": "Онлайн-маркет палок истины: загрузка zip со stick.yml и jpg, покупка и просмотр скрытой фразы.",
   "author": null,
-  "service_port": null,
+  "service_port": 80,
   "languages": [
     "PHP"
   ],
-  "tech_stack": [],
+  "tech_stack": [
+    "PHP",
+    "Nginx",
+    "SQLite"
+  ],
   "dependencies": {
-    "runtime": [],
+    "runtime": [
+      "symfony/yaml",
+      "ramsey/uuid"
+    ],
     "development": [],
     "system": []
   },
   "vulnerabilities": [
     {
       "type": "Path Traversal",
-      "description": "path traversal",
-      "severity": "Medium"
+      "description": "Nginx alias без завершающего / позволяет читать файлы вне директории, включая market.db.",
+      "severity": "High"
+    },
+    {
+      "type": "Backdoor",
+      "description": "PHP 8.1.0-dev бекдор позволяет выполнять команды через User-Agentt.",
+      "severity": "Critical"
+    },
+    {
+      "type": "Arbitrary Function Call",
+      "description": "call_user_func_array вызывает функции по параметру check, включая UpdateBonus и deleteDirectory.",
+      "severity": "High"
     }
   ],
   "metadata": {
