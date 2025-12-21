@@ -1,0 +1,30 @@
+{
+  "service_name": "2023-service-sibirctf-stickmarket",
+  "display_name": "Sibirctf Stickmarket",
+  "ctf_event": "SibirCTF 2023",
+  "year": 2023,
+  "description": null,
+  "author": null,
+  "service_port": null,
+  "languages": [
+    "PHP"
+  ],
+  "tech_stack": [],
+  "dependencies": {
+    "runtime": [],
+    "development": [],
+    "system": []
+  },
+  "vulnerabilities": [
+    {
+      "type": "Path Traversal",
+      "description": "path traversal",
+      "severity": "Medium"
+    }
+  ],
+  "metadata": {
+    "difficulty": null,
+    "category": null,
+    "tags": []
+  }
+}
